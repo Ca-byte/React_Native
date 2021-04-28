@@ -5,7 +5,7 @@ import starwar from './assets/starwar.png'
 
 
 
-export default class MyFetchly extends Component {
+ class MyFetchly extends Component {
 
   constructor(props){
     super(props);
@@ -15,22 +15,28 @@ export default class MyFetchly extends Component {
   }
   
 
-  loadStarWar = () => {
+  loadStarWar = async () => {
+    const response =   await fetch('https://swapi.dev/api/people')
+    const data = await response.json();
+    console.log(data.results[1])
+    this.setState({ data: data.results })
 
-    fetch('https://swapi.dev/api/people/?')
-      .then( res => res.json() )
-      .then( res => {
-        this.setState({
-          data: res.people || []
-        })
-      })
+    // Closures 
+    // // fetch('https://swapi.dev/api/people')
+    // //   .then( res => res.json() )
+    // //   .then( res => {
+    // //     this.setState({
+    // //        data: res.api || []
+    // //     })
+        
+    // //   }).catch((error)=> console.log(error))
 
 
   }
 
-  componentDidMount(){
+ async componentDidMount(){
     
-    this.loadStarWar();
+    await this.loadStarWar();
 
   }
   render() {
@@ -90,5 +96,7 @@ const styles = StyleSheet.create({
   },
    
 });
+
+export default MyFetchly;
 
 
